@@ -1,28 +1,4 @@
-Names,Company,Domain,Role,Email.- To Be Filled Out
-Jason Mikami,Uber,Uber.com,"Director, Engineering - Infrastructure",JMikami@uber.com
-Craig Williams,Prive,Prive.com,Director of Engineering,craig@tryprive.com
-Francois Goldfain,Google,Google.com,"Director of Engineering, Android Media",fgoldfain@google.com
-Wonyoung Kim,Cirrus Logic,cirrus.com,Director of Engineering,Wonyoung.kim@cirrus.com
-Brennan Batalla,Pigeon Loans,pigeonloans.io,Director of Engineering,bbatalla@pigeonloans.io
-Gautam Shivnani,Salesforce,Salesforce.com,Director of Engineering,gShivnani@salesforce.com
-Samee Zahid,Chipper Cash,chippercash.com,Director of Engineering [ML & Data] ,Samee@chippercash.com
-Sulabh Kumra,eBots,eBots.com,Director of Robotics Engineering,skumra@ebots.com
-Pratyus Patnaik,Okta,Okta.com,Senior Director of Engineering,pratyus.patnaik@okta.com
-Yong Qiao,Amazon,Amazon.com,Senior Director of Security Engineering,qyong@amazon.com
-Himanhsu Gahlot,Apollo.ai,Apollo.ai.com,Sr. Director of Engineering (Data & ML),himanhsu@apollo.io
-Alireza Darvish,Google,Google.com,Director of Engineering,adarvish@google.com
-Basil Hafez,Netflix,Netflix.com,Director of Payments Engineering,bhafex@netflix.com
-Wenjie Fu,Meta,Meta.com,"Director of Engineering, News Feed",wfu@fb.com
-Kyle Stanhouse,Cyngn,Cyngn.com,"Director of Engineering, Autonomy",kyle@cyngn.com
-Jen Dolson,Google,Google.com,"Director of Engineering, Google Labs",jdolson@google.com
-Omo Ojeomogha ,Wave Mobile Money,wavemoney.com,Director of Engineering,omo.ojeomogha@wavemoney.com
-Vivek Trehan,Meta,Meta.com,"Director of Engineering, Content Creation Distribution ",
-Rim Yazigi,Google,Google.com,"Director of Engineering, Fitbit",ryazigi@google.com
-Wilson Young,Google,Google.com,"Director of Engineering, Chronicle Security",wyoung@google.com
-Vishnu Sundaresan,Uber,Uber.com,"Director of Engineering, Delivery Logistics",
-Kristina Sing,DB Energy,directenergy.com,Director of Engineering,
-Maira Benjamin,Change.Org,Change.Org.com,Sr. Director of Engineering,
-Shailesh Soliwal,Reddit,Reddit.com,Director of Engineering,
+Maira Benjamin,Change.Org,change.org,Sr. Director of Engineering,
 Sol Tran,Yuga Labs,yugalk.com,Director of Engineering,
 Tao Yu,Meituan,Meituan.com,Director of Engineering,
 Ogden Kent,Instacart,Instacart.com,Director of Engineering,
@@ -97,15 +73,15 @@ Geraud Boyer,Datadog,Datadog.com,Director of Engineering,
 Elliott Alber,Alber Technologies,albert.com,Director of Engineering,
 Sanjay Bhansali,Google,Google.com,Director of Engineering,
 Ian Buono,Twilio,Twilio.com,Director of Engineering,
-Guillaume Aubert,Meta,Meta.com,Director of Engineering,
+Guillaume Aubert,Meta,fb.com,Director of Engineering,
 Mao-Ter Chen,InnoPeak,InnoPeak.com,Director of Engineering,
 Shatarupu Nandi,VMware,VMware.com,Director of Engineering,
 Eric Chen,Honor,Honor.com,Director of Engineering,
 Eddie Ruvinsky,Instagram,Instagram.com,Director of Engineering,
-Boris Gueorguiev,Macrometa,Macrometa.com,Director of Engineering,
+Boris Gueorguiev,Macrometa,Macrofb.com,Director of Engineering,
 Brook Molla,LinkedIn,LinkedIn.com,Director of Engineering,
 Dick Brouwer,WhatsApp,WhatsApp.com,Director of Engineering,
-Yun Jin,Meta,Meta.com,Director of Engineering,
+Yun Jin,Meta,fb.com,Director of Engineering,
 Ram Subbaroyan,Everlaw,Everlaw.com,Director of Engineering,
 Jun Luo,Google,Google.com,Director of Engineering,jluo@google.com
 Alpa Shah,Autonomic,Autonomic.com,Director of Engineering,
@@ -117,10 +93,10 @@ Helen Han,LendingClub,LendingClub.com,Director of Engineering,
 Dave Wu,Qualcomm,Qualcomm.com,Director of Engineering,
 Matthieu Jonemann,Rondo Energy,rondoenergy.com,Director of Engineering,
 Philip Yeung,Cadence Design Systems,cadence.com,Director of Engineering,
-Maurizio Ferconi,Meta,Meta.com,Director of Engineering,
+Maurizio Ferconi,Meta,fb.com,Director of Engineering,
 Sanjir Jhala,Google,Google.com,Director of Engineering,sjhala@google.com
 Andy Neuschatz,The Information,istore.com,Director of Engineering,
-Sophia Chung,Meta,Meta.com,Director of Engineering,
+Sophia Chung,Meta,fb.com,Director of Engineering,
 Trang Truong,OPSWAT,OPSWAT.com,Director of Engineering,
 Kevin Song,VMware,VMware.com,Director of Engineering,
 Li-Ming Lu,Equilar,Equilar.com,Director of Engineering,
@@ -163,7 +139,7 @@ Madhuri Kottamraju,Twitter,Twitter.com,Director of Engineering,
 Charudatta Wad,Lyft,Lyft.com,Director of Engineering,
 Nirmal Srinivasan,Chime,Chime.com,Director of Engineering,
 Tony Duco,Circulo Health,circle-health.com,Director of Engineering,
-Chanrdika Gole,Meta,Meta.com,Director of Engineering,
+Chanrdika Gole,Meta,fb.com,Director of Engineering,
 Erik Cummins,Advanced.farm,Advanced.farm.com,Director of Engineering,
 Artem Grigoryan,LinkedIn,LinkedIn.com,Director of Engineering,
 Rohan Agrawal,Owner,Owner.com,Director of Engineering,
