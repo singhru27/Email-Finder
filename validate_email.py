@@ -55,7 +55,3 @@ class MailtesterBulk():
         r = requests.get(url)
         with open('result.txt', 'a') as res:
             res.write(r.content+'\n')
-
-
-if __name__ == '__main__':
-    pass
