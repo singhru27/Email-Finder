@@ -47,6 +47,10 @@ class EmailWriter():
         for email in emailList:
             if self.checkForExistence(email):
                 return True
+            
+        
+        MongoUserDAO = MongoDAO.MongoUserDAO()
+        MongoFormatDAO = MongoDAO.MongoFormatDAO()
 
         for email in emailList:
             self.apiCounter += 1
@@ -55,9 +59,11 @@ class EmailWriter():
             res = json.loads(res)
             if res["result"] == "valid":
                 self.writeToCSV(firstName, lastName, company, domain, role, email)
+                MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, True)    
                 return True
             elif res["result"] == "unknown" or res["result"] == "risky":
                 self.writeToCSV(firstName, lastName, company, domain, role, email, "x")
+                MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, True)    
                 return True
 
         return False
@@ -95,7 +101,6 @@ class EmailWriter():
                 role = row[3]
                 self.getEmailFormat(firstName, lastName, company, domain, role)
                 print(self.apiCounter)
-
     def loadToMongo(self, filePath):
         counter = 0
         MongWriter = MongoDAO.MongoUserDAO()
