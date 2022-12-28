@@ -28,7 +28,7 @@ class MongoFormatDao(MongoDAO):
             "formatID": formatID
         }
         self.collection.insert_one(item)
-
+    
 class MongoUserDAO(MongoDAO):
     def __init__(self):
         super().__init__()
@@ -49,4 +49,7 @@ class MongoUserDAO(MongoDAO):
             "unknownStatus": unknownStatus
         }
         self.collection.insert_one(item)
+    
+    def findByEmail(self, email):
+        return self.collection.find({"email" : email})
     
