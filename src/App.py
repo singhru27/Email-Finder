@@ -4,6 +4,7 @@ import json
 import sys
 sys.path.insert(0, 'Model')
 sys.path.insert(0, '..')
+sys.path.insert(0, "Controller")
 import MongoDAO
 import progressbar
 from validate_email import MailtesterSingle
@@ -47,21 +48,33 @@ class EmailWriter():
         for email in emailList:
             if self.checkForExistence(email):
                 return True
+
+        # Check for domain
+        currFormat = self.checkForFormat(domain)
+        if currFormat:
+            email = emailList[currFormat["formatID"]]
+            E = MailtesterSingle(config.API_KEY, email)
+            res - json.loads(res)
+            if res["result"] == "valid" or res["result"] == "unknown" or res["result"] == "risky":
+                self.writeToCSV(firstName, lastName, company, domain, role, email)
+                return True                
             
-        
         MongoUserDAO = MongoDAO.MongoUserDAO()
         MongoFormatDAO = MongoDAO.MongoFormatDAO()
 
-        for email in emailList:
+        for i, email in enumerate(emailList):
             self.apiCounter += 1
             E = MailtesterSingle(config.API_KEY, email)
             res = E.control()
+            print(email)
+            print(res)
             res = json.loads(res)
             if res["result"] == "valid":
                 self.writeToCSV(firstName, lastName, company, domain, role, email)
-                MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, True)    
+                MongoFormatDAO.insertOne(domain, i)
+                MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, False)    
                 return True
-            elif res["result"] == "unknown" or res["result"] == "risky":
+            elif res["result"] == "risky":
                 self.writeToCSV(firstName, lastName, company, domain, role, email, "x")
                 MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, True)    
                 return True
@@ -74,15 +87,35 @@ class EmailWriter():
         Output: Boolean indicating whether this email has already been entered into the database
         """
         MongoUserDAO = MongoDAO.MongoUserDAO()
-        res = list(MongoUserDAO.findByEmail({"email": email}))
+        res = MongoUserDAO.findByEmail({"email": email})
+        if not res:
+            return False
+        res = list(res)
         if len(res) > 0:
             return True
         return False
 
+    def checkForFormat(self, domain):
+        """
+        Input: Prospective domain
+        Output: Format code of the email. If it doesn't exist, then returns False
+        """
+        MongoFormatDAO = MongoDAO.MongoFormatDAO()
+        res = MongoFormatDAO.findByDomain(domain)
+        if not res:
+            return False
+        res = list(res)
+        if len(res) == 0:
+            return False
+        return res
+
 
     def writeToCSV(self, firstName, lastName, company, domain, role, email, tag=None):
-
-        with open("emails.csv", "a") as destinationFile:
+        """
+        Input: A series of values for a new prospect
+        Output: None. The function just writes the client to the databse and writes to the databas
+        """
+        with open("Data/emails.csv", "a") as destinationFile:
             emailWriter = csv.writer(destinationFile)
             if tag:
                 emailWriter.writerow([firstName + " " + lastName, company, domain, role, email, "x"])
@@ -90,6 +123,17 @@ class EmailWriter():
                 emailWriter.writerow([firstName + " " + lastName, company, domain, role, email])
         
     def convertCSV(self, fileName):
+        """
+        Input: A CSV file
+        Output: None. The function just calls other functions to retrieve the email format and load into the database
+        """
+
+        with open(fileName) as sourceFile:
+            emailReader = csv.reader(sourceFile)
+            rowCount = sum(1 for row in emailReader)
+            bar = progressbar.ProgressBar(maxval=rowCount).start()
+        
+        counter = 0
         with open(fileName) as sourceFile:
             emailReader = csv.reader(sourceFile)
             for i, row in enumerate(emailReader):
@@ -100,7 +144,9 @@ class EmailWriter():
                 domain = row[2]
                 role = row[3]
                 self.getEmailFormat(firstName, lastName, company, domain, role)
-                print(self.apiCounter)
+                counter += 1
+                bar.update(counter)
+
     def loadToMongo(self, filePath):
         counter = 0
         MongWriter = MongoDAO.MongoUserDAO()

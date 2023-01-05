@@ -11,7 +11,7 @@ class MongoDAO():
         return client["Emails"]
 
 
-class MongoFormatDao(MongoDAO):
+class MongoFormatDAO(MongoDAO):
 
     def __init__(self):
         super().__init__()
@@ -28,6 +28,9 @@ class MongoFormatDao(MongoDAO):
             "formatID": formatID
         }
         self.collection.insert_one(item)
+
+    def findByDomain(self, domain):
+        return self.collection.find_one({"domain": domain})
     
 class MongoUserDAO(MongoDAO):
     def __init__(self):
