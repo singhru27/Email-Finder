@@ -3,13 +3,14 @@ import config
 import json
 import sys
 sys.path.insert(0, 'Model')
+sys.path.insert(0, 'Data')
 sys.path.insert(0, '..')
 sys.path.insert(0, "Controller")
 import MongoDAO
 import progressbar
 import requests
 import time
-import MailtesterSingle
+from validate_email import MailtesterSingle
 
 
 class EmailWriter():
@@ -51,33 +52,35 @@ class EmailWriter():
             if self.checkForExistence(email):
                 return True
 
-        # Check for domain
-        currFormat = self.checkForFormat(domain)
-        if currFormat:
-            email = emailList[currFormat["formatID"]]
-            E = MailtesterSingle(config.API_KEY, email)
-            res - json.loads(res)
-            if res["result"] == "valid" or res["result"] == "unknown" or res["result"] == "risky":
-                self.writeToCSV(firstName, lastName, company, domain, role, email)
-                return True                
+        # # Check for domain
+        # currFormat = self.checkForFormat(domain)
+        # if currFormat:
+        #     email = emailList[currFormat["formatID"]]
+        #     E = MailtesterSingle(config.API_KEY, email)
+        #     res = E.control()
+        #     res = json.loads(res)
+        #     print(res)
+        #     if res["result"] == "valid" or res["result"] == "unknown" or res["result"] == "risky":
+        #         self.writeToCSV(firstName, lastName, company, domain, role, email)
+        #         return True                
             
         MongoUserDAO = MongoDAO.MongoUserDAO()
         MongoFormatDAO = MongoDAO.MongoFormatDAO()
 
         for i, email in enumerate(emailList):
             self.apiCounter += 1
-            res = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + config.API_KEY + "&email=" + email)          
+            E = MailtesterSingle(config.API_KEY, email)
+            res = E.control()  
             print(email)
-            res = res.json()
+            res = json.loads(res)
             print(res)
-            time.sleep(1)
-            if res["deliverability"] == "DELIVERABLE":
+            if res["result"] == "valid":
                 self.writeToCSV(firstName, lastName, company, domain, role, email)
                 MongoFormatDAO.insertOne(domain, i)
                 MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, False)    
-            elif res["deliverability"] == "RISKY" or res["deliverability"] == "UKNOWN":
-                self.writeToCSV(firstName, lastName, company, domain, role, email, "x")
-                MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, True)    
+            # elif res["result"] == "risky" or res["result"] == "unknown":
+            #     self.writeToCSV(firstName, lastName, company, domain, role, email, "x")
+            #     MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, True)    
 
         return False
 
@@ -137,12 +140,11 @@ class EmailWriter():
         with open(fileName) as sourceFile:
             emailReader = csv.reader(sourceFile)
             for i, row in enumerate(emailReader):
-                name = row[0].split()
-                firstName = name[0]
-                lastName = name[1]
-                company = row[1]
-                domain = row[2]
-                role = row[3]
+                firstName = row[0]
+                lastName = row[1]
+                company = row[2]
+                domain = row[3]
+                role = row[4]
                 self.getEmailFormat(firstName, lastName, company, domain, role)
                 counter += 1
                 bar.update(counter)
