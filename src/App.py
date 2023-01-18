@@ -28,7 +28,7 @@ class EmailWriter():
 
         emailList = []
         emailList.append(firstName + lastName + "@" + domain)
-        emailList.append(firstName + ".asdfasdfasdf" + lastName + "@" + domain)
+        emailList.append(firstName + lastName + "@" + domain)
         emailList.append(firstName[0] + lastName + "@" + domain)
         emailList.append(firstName[0] + "." + lastName + "@" + domain)
         emailList.append(lastName + firstName + "@" + domain)
@@ -69,12 +69,18 @@ class EmailWriter():
 
         for i, email in enumerate(emailList):
             self.apiCounter += 1
-            E = MailtesterSingle(config.API_KEY, email)
-            res = E.control()  
+
+            url = "https://api.clearout.io/v2/email_verify/instant"
+            payload = '{"email": email}'
+            headers = {
+                'Content-Type': "application/json",
+                'Authorization': config.API_KEY,
+                }
+            res = requests.post(url, params=payload, headers=headers)
+            res = res.json()
             print(email)
-            res = json.loads(res)
             print(res)
-            if res["result"] == "valid":
+            if res["data"]["result"] == "valid":
                 self.writeToCSV(firstName, lastName, company, domain, role, email)
                 MongoFormatDAO.insertOne(domain, i)
                 MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, False)    
