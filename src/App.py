@@ -48,9 +48,9 @@ class EmailWriter():
         emailList.append(firstName + "-" + lastName + "@" + domain)
 
         # Checking for duplicates
-        for email in emailList:
-            if self.checkForExistence(email):
-                return True
+        # for email in emailList:
+        #     if self.checkForExistence(email):
+        #         return True
 
         # # Check for domain
         # currFormat = self.checkForFormat(domain)
@@ -71,19 +71,18 @@ class EmailWriter():
             self.apiCounter += 1
 
             url = "https://api.clearout.io/v2/email_verify/instant"
-            payload = '{"email": email}'
+            payload = '{"email": "us@clearout.io"}'
             headers = {
                 'Content-Type': "application/json",
                 'Authorization': config.API_KEY,
                 }
-            res = requests.post(url, params=payload, headers=headers)
-            res = res.json()
-            print(email)
-            print(res)
-            if res["data"]["result"] == "valid":
+            response = requests.request("POST", url, data=payload, headers=headers)
+            response = response.json()
+
+            if response["data"]["status"] == "valid":
                 self.writeToCSV(firstName, lastName, company, domain, role, email)
-                MongoFormatDAO.insertOne(domain, i)
-                MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, False)    
+                # MongoFormatDAO.insertOne(domain, i)
+                # MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, False)    
             # elif res["result"] == "risky" or res["result"] == "unknown":
             #     self.writeToCSV(firstName, lastName, company, domain, role, email, "x")
             #     MongoUserDAO.insertOne(firstName, lastName, company, domain, role, email, True)    
